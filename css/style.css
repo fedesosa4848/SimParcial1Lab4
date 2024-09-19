@@ -1,0 +1,27 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+th {
+    background-color: #f4f4f4;
+}
+button {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.todo { margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; }
+
+
+.post, .album {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+#user-container {
+    margin-bottom: 20px;
+}

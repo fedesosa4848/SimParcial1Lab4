@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Lista de Usuarios</title>
+</head>
+<body>
+    <h1>Lista de Usuarios</h1>
+    <table id="user-table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Aquí se cargarán los usuarios -->
+        </tbody>
+    </table>
+
+    <h1>Buscar Usuario</h1>
+    <input type="number" id="user-id-input" placeholder="Ingresa el ID del usuario">
+    <button id="fetch-user-data-btn">Mostrar Datos del Usuario</button>
+
+    <h2>Usuario</h2>
+    <div id="user-container"></div>
+    <h3>Posts</h3>
+    <div id="posts-container"></div>
+    <h3>Album</h3>
+    <div id="albums-container"></div>
+
+
+    <h2>ToDo Usuario</h2>
+    <div></div>
+        <input type="number" id="user-id-input" placeholder="Ingrese el ID del usuario" min="1">
+        <button id="fetch-todos-btn">Mostrar Tareas</button>
+    </div>
+    <div id="todos-container"></div>
+    <script type="module" src="javascript/app.js"></script>
+
+</body>
+</html>
