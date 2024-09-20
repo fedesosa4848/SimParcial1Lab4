@@ -110,9 +110,7 @@ document.getElementById('fetch-user-data-btn').addEventListener('click', handleF
 
 // Llama a la función para obtener los usuarios cuando la página se carga
 // Ejecutamos la función para mostrar los usuarios cuando la página se carga
-document.addEventListener('DOMContentLoaded', () => {
-    // Si deseas que haga algo al cargar la página, puedes hacerlo aquí
-});
+document.addEventListener('todos-container'),addEventListener('click',mostrarTodosDeUsuario);
 
 let usuarioVerificado = false; // Bandera para rastrear si el usuario ha sido verificado
 

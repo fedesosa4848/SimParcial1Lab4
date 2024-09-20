@@ -1,27 +1,98 @@
+/* Estilo general para el fondo */
+body {
+    background-color: #FFF9DB; /* Fondo amarillo claro */
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Encabezados */
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+h2, h3 {
+    color: #444;
+}
+
+/* Tabla de usuarios */
 table {
     width: 100%;
     border-collapse: collapse;
+    margin-bottom: 20px;
 }
+
 th, td {
     padding: 10px;
     border: 1px solid #ddd;
 }
+
 th {
     background-color: #f4f4f4;
+    font-weight: bold;
 }
+
+/* Estilo de botones */
 button {
-    padding: 5px 10px;
+    padding: 10px 15px;
+    background-color: #FFD966; /* Un amarillo suave */
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    color: #333;
+    font-weight: bold;
 }
 
-.todo { margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; }
+button:hover {
+    background-color: #FFC107; /* Un amarillo más oscuro en hover */
+}
 
+/* Inputs */
+input, textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
 
-.post, .album {
+/* Estilos para los contenedores de usuario, posts, y álbums */
+#user-container, #posts-container, #albums-container, #todos-container, #nuevo-post-container {
+    background-color: #F5F5DC; /* Beige claro */
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+/* Estilo para los elementos ToDo, Posts y Albums */
+.todo, .post, .album {
     margin-bottom: 10px;
     padding: 10px;
     border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #FFFBEA; /* Un tono aún más claro de beige */
 }
-#user-container {
+
+/* Estilo del formulario */
+form {
+    background-color: #F5F5DC; /* Beige claro */
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
     margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+#estado-usuario {
+    margin-top: 10px;
+    font-weight: bold;
 }
