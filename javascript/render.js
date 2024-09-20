@@ -70,7 +70,25 @@ export function renderAlbums(albums) {
     });
 }
 
+// render.js
 
+// Función para renderizar el nuevo post en el DOM
+export function renderNuevoPost(post) {
+    const nuevoPostContainer = document.getElementById('nuevo-post-container');
+    
+    // Limpiar el contenedor antes de agregar el nuevo post
+    nuevoPostContainer.innerHTML = '';
 
-
+    // Crear un elemento para mostrar el nuevo post
+    const postElement = document.createElement('div');
+    postElement.classList.add('post');
+    postElement.innerHTML = `
+        <h4>${post.title}</h4>
+        <p>${post.body}</p>
+        <p><strong>ID del Usuario:</strong> ${post.userId}</p>
+    `;
+    
+    // Agregar el nuevo post al contenedor
+    nuevoPostContainer.appendChild(postElement);
+}
 

@@ -94,4 +94,30 @@ export async function obtenerTodosDeUsuario(idUsuario) {
     }
 }
 
+// Función para crear un post
+export async function crearPost(userId, title, body) {
+    try {
+        const respuesta = await fetch('https://jsonplaceholder.typicode.com/posts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userId,
+                title,
+                body
+            })
+        });
+        
+        if (!respuesta.ok) {
+            throw new Error(`Estado de error HTTP: ${respuesta.status}`);
+        }
+        
+        return await respuesta.json();
+    } catch (error) {
+        console.error('Error al crear el post:', error);
+        throw error;
+    }
+}
+
 

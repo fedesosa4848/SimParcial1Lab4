@@ -7,6 +7,8 @@ import { obtenerTodosDeUsuario } from "./api.js";
 import { renderizarTodos } from './render.js';
 import { obtenerUsuarioPorId, obtenerPostsDelUsuario, obtenerAlbumsDelUsuario } from './api.js';
 import { renderUsuario, renderPosts, renderAlbums } from './render.js';
+import { crearPost } from './api.js';
+import { renderNuevoPost } from './render.js';
 
 
 // Función para mostrar los usuarios
@@ -101,6 +103,7 @@ function handleFetchUserDataButtonClick() {
         alert('Por favor, ingrese un ID de usuario válido.');
     }
 }
+document.addEventListener('DOMContentLoaded', mostrarUsuarios);
 
 // Configura el evento del botón para mostrar datos del usuario
 document.getElementById('fetch-user-data-btn').addEventListener('click', handleFetchUserDataButtonClick);
@@ -111,14 +114,82 @@ document.addEventListener('DOMContentLoaded', () => {
     // Si deseas que haga algo al cargar la página, puedes hacerlo aquí
 });
 
+let usuarioVerificado = false; // Bandera para rastrear si el usuario ha sido verificado
 
+// Función para manejar la verificación del usuario
+async function handleVerificarUsuario() {
+    const userId = document.getElementById('user-id').value;
+    const estadoUsuario = document.getElementById('estado-usuario');
+    const crearPostForm = document.getElementById('crear-post-form');
 
-// Configura el evento del botón para mostrar tareas
-document.getElementById('fetch-todos-btn').addEventListener('click', manejarClicBotonMostrarTareas);
+    // Verificar que se haya ingresado un ID de usuario
+    if (!userId) {
+        estadoUsuario.textContent = 'Por favor, ingresa un ID de usuario.';
+        estadoUsuario.style.color = 'red';
+        crearPostForm.style.display = 'none';
+        usuarioVerificado = false;
+        return;
+    }
 
-// Llama a la función para obtener los usuarios cuando la página se carga
-// Ejecutamos la función para mostrar los usuarios cuando la página se carga
-document.addEventListener('DOMContentLoaded', mostrarUsuarios);
+    try {
+        // Verificar si el usuario existe
+        const usuario = await obtenerUsuarioPorId(userId);
+        if (usuario) {
+            // Si el usuario existe, mostramos el formulario para crear un post
+            estadoUsuario.textContent = 'Usuario válido. Puedes crear un post.';
+            estadoUsuario.style.color = 'green';
+            crearPostForm.style.display = 'block';  // Mostrar el formulario de crear post
+            usuarioVerificado = true; // Marca el usuario como verificado
+        } else {
+            estadoUsuario.textContent = 'Usuario no encontrado.';
+            estadoUsuario.style.color = 'red';
+            crearPostForm.style.display = 'none';  // Ocultar el formulario si no existe
+            usuarioVerificado = false;
+        }
+    } catch (error) {
+        console.error('Error al verificar el usuario:', error);
+        estadoUsuario.textContent = 'Error al verificar el usuario.';
+        estadoUsuario.style.color = 'red';
+        crearPostForm.style.display = 'none';  // Ocultar el formulario si hay error
+        usuarioVerificado = false;
+    }
+}
 
-// Llama a la función con el ID del usuario deseado (esto puede ser removido si no es necesario)
-// mostrarTodosDeUsuario(1);  // Reemplaza 1 con el ID del usuario que desees
+// Función para manejar la creación del post
+async function handleCreatePostFormSubmit(event) {
+    event.preventDefault(); // Evita la recarga de la página al enviar el formulario
+
+    const userId = document.getElementById('user-id').value;
+    const title = document.getElementById('post-title').value;
+    const body = document.getElementById('post-body').value;
+
+    // Verificar si el usuario fue verificado antes de permitir la creación del post
+    if (!usuarioVerificado) {
+        alert('Primero debes verificar el usuario antes de crear el post.');
+        return;
+    }
+
+    // Verificar que los campos de título y cuerpo estén completos
+    if (!title || !body) {
+        alert('Por favor, completa todos los campos del post.');
+        return;
+    }
+
+    try {
+        // Crear el post
+        const nuevoPost = await crearPost(userId, title, body);
+        console.log('Post creado:', nuevoPost);
+
+        // Renderizar el nuevo post en la interfaz de usuario
+        renderNuevoPost(nuevoPost);
+    } catch (error) {
+        console.error('Error al crear el post:', error);
+        alert('Ocurrió un error al intentar crear el post. Intenta nuevamente.');
+    }
+}
+
+// Asignar el evento de clic al botón de verificar usuario
+document.getElementById('verificar-usuario-btn').addEventListener('click', handleVerificarUsuario);
+
+// Asignar el evento de submit al formulario de crear post
+document.getElementById('crear-post-form').addEventListener('submit', handleCreatePostFormSubmit);

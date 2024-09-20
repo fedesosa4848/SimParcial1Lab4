@@ -42,5 +42,28 @@
     <div id="todos-container"></div>
     <script type="module" src="javascript/app.js"></script>
 
+    <form id="verificar-usuario-form">
+        <label for="user-id">ID del Usuario:</label>
+        <input type="number" id="user-id" required>
+        <button type="button" id="verificar-usuario-btn">Verificar Usuario</button>
+        <p id="estado-usuario"></p>
+    </form>
+    
+
+    <h1>Crear un Nuevo Post</h1>
+    <form id="crear-post-form">
+        
+        <label for="post-title">Título del Post:</label>
+        <input type="text" id="post-title" name="title" required><br><br>
+        
+        <label for="post-body">Cuerpo del Post:</label>
+        <textarea id="post-body" name="body" required></textarea><br><br>
+        
+        <button type="submit">Crear Post</button>
+    </form>
+
+    <div id="nuevo-post-container"></div>
+
+
 </body>
 </html>
