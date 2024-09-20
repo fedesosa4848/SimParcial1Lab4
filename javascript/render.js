@@ -1,3 +1,20 @@
+// render.js
+// Función para renderizar el usuario en el DOM
+export function renderUsuario(usuario) {
+    const userContainer = document.getElementById('user-container');
+    userContainer.innerHTML = ''; // Limpia el contenedor antes de agregar nuevos datos
+    
+    const userElement = document.createElement('div');
+    userElement.classList.add('user');
+    userElement.innerHTML = `
+        <h3>${usuario.name}</h3>
+        <p>Email: ${usuario.email}</p>
+        <p>Teléfono: ${usuario.phone}</p>
+        <p>Dirección: ${usuario.address.street}, ${usuario.address.city}</p>
+    `;
+    userContainer.appendChild(userElement); // Agrega el elemento al contenedor
+}
+
 // Función para renderizar los "todos" en el DOM
 export function renderizarTodos(todos) {
     const contenedorTodos = document.getElementById('todos-container');
@@ -21,23 +38,6 @@ export function renderizarTodos(todos) {
     });
 }
 
-// render.js
-
-// Función para renderizar el usuario en el DOM
-export function renderUsuario(usuario) {
-    const userContainer = document.getElementById('user-container');
-    userContainer.innerHTML = ''; // Limpia el contenedor antes de agregar nuevos datos
-    
-    const userElement = document.createElement('div');
-    userElement.classList.add('user');
-    userElement.innerHTML = `
-        <h3>${usuario.name}</h3>
-        <p>Email: ${usuario.email}</p>
-        <p>Teléfono: ${usuario.phone}</p>
-        <p>Dirección: ${usuario.address.street}, ${usuario.address.city}</p>
-    `;
-    userContainer.appendChild(userElement); // Agrega el elemento al contenedor
-}
 
 // Función para renderizar los posts en el DOM
 export function renderPosts(posts) {
