@@ -2,13 +2,10 @@
 Se espera que la lógica esté separada en distintos módulos
 */
 
-import { obtenerUsuarios } from "./api.js";
-import { obtenerTodosDeUsuario } from "./api.js";
-import { renderizarTodos } from './render.js';
-import { obtenerUsuarioPorId, obtenerPostsDelUsuario, obtenerAlbumsDelUsuario } from './api.js';
-import { renderUsuario, renderPosts, renderAlbums } from './render.js';
-import { crearPost } from './api.js';
-import { renderNuevoPost } from './render.js';
+
+import { obtenerUsuarios,obtenerTodosDeUsuario,obtenerUsuarioPorId, obtenerPostsDelUsuario, obtenerAlbumsDelUsuario,crearPost } from './api.js';
+import { renderizarTodos,renderUsuario, renderPosts, renderAlbums ,renderNuevoPost, renderizarTablaDeUsuarios} from './render.js';
+
 
 
 // Función para mostrar los usuarios
@@ -24,27 +21,7 @@ async function mostrarUsuarios() {
     }
 }
 
-// Función que renderiza los usuarios en una tabla
-function renderizarTablaDeUsuarios(usuarios) {
-    const cuerpoTablaUsuarios = document.querySelector('#user-table tbody');
-    
-    // Limpiar la tabla antes de agregar los datos
-    cuerpoTablaUsuarios.innerHTML = '';
 
-    // Iterar sobre cada usuario y agregar una fila en la tabla
-    usuarios.forEach(usuario => {
-        const fila = document.createElement('tr');
-        
-        fila.innerHTML = `
-            <td>${usuario.name}</td>
-            <td>${usuario.email}</td>
-            <td>${usuario.phone}</td>
-            <td><button onclick="seleccionarUsuario(${usuario.id})">Ver Tareas</button></td>
-        `;
-        
-        cuerpoTablaUsuarios.appendChild(fila);
-    });
-}
 
 // Función para obtener los todos y renderizarlos
 async function mostrarTodosDeUsuario(idUsuario) {
@@ -53,18 +30,6 @@ async function mostrarTodosDeUsuario(idUsuario) {
         renderizarTodos(todos);
     } catch (error) {
         console.error('Error al mostrar los todos:', error);
-    }
-}
-
-// Función para manejar el clic en el botón de mostrar tareas
-function manejarClicBotonMostrarTareas() {
-    const inputIdUsuario = document.getElementById('user-id-input');
-    const idUsuario = parseInt(inputIdUsuario.value, 10);
-
-    if (!isNaN(idUsuario) && idUsuario > 0) {
-        mostrarTodosDeUsuario(idUsuario);
-    } else {
-        alert('Por favor, ingrese un ID de usuario válido.');
     }
 }
 
@@ -103,16 +68,8 @@ function handleFetchUserDataButtonClick() {
         alert('Por favor, ingrese un ID de usuario válido.');
     }
 }
-document.addEventListener('DOMContentLoaded', mostrarUsuarios);
 
-// Configura el evento del botón para mostrar datos del usuario
-document.getElementById('fetch-user-data-btn').addEventListener('click', handleFetchUserDataButtonClick);
 
-// Llama a la función para obtener los usuarios cuando la página se carga
-// Ejecutamos la función para mostrar los usuarios cuando la página se carga
-document.addEventListener('todos-container'),addEventListener('click',mostrarTodosDeUsuario);
-
-let usuarioVerificado = false; // Bandera para rastrear si el usuario ha sido verificado
 
 // Función para manejar la verificación del usuario
 async function handleVerificarUsuario() {
@@ -137,7 +94,7 @@ async function handleVerificarUsuario() {
             estadoUsuario.textContent = 'Usuario válido. Puedes crear un post.';
             estadoUsuario.style.color = 'green';
             crearPostForm.style.display = 'block';  // Mostrar el formulario de crear post
-            usuarioVerificado = true; // Marca el usuario como verificado
+            usuarioVerificado = true; //  Marca el usuario como verificado
         } else {
             estadoUsuario.textContent = 'Usuario no encontrado.';
             estadoUsuario.style.color = 'red';
@@ -155,19 +112,19 @@ async function handleVerificarUsuario() {
 
 // Función para manejar la creación del post
 async function handleCreatePostFormSubmit(event) {
-    event.preventDefault(); // Evita la recarga de la página al enviar el formulario
+    event.preventDefault(); // Evito la recarga de la página al enviar el formulario
 
     const userId = document.getElementById('user-id').value;
     const title = document.getElementById('post-title').value;
     const body = document.getElementById('post-body').value;
 
-    // Verificar si el usuario fue verificado antes de permitir la creación del post
+    // Verifico si el usuario fue verificado antes de permitir la creación del post
     if (!usuarioVerificado) {
         alert('Primero debes verificar el usuario antes de crear el post.');
         return;
     }
 
-    // Verificar que los campos de título y cuerpo estén completos
+    // Verifico que los campos de título y cuerpo estén completos
     if (!title || !body) {
         alert('Por favor, completa todos los campos del post.');
         return;
@@ -185,6 +142,27 @@ async function handleCreatePostFormSubmit(event) {
         alert('Ocurrió un error al intentar crear el post. Intenta nuevamente.');
     }
 }
+
+document.addEventListener('DOMContentLoaded', mostrarUsuarios);
+
+// Configura el evento del botón para mostrar datos del usuario
+document.getElementById('fetch-user-data-btn').addEventListener('click', handleFetchUserDataButtonClick);
+
+// Encargada de mostrar los ToDo del usuario
+document.getElementById('fetch-todos-btn').addEventListener('click', function() {
+    const userIdInput = document.getElementById('user-id-input-todo').value; // Obtener el valor del input
+    const idUsuario = parseInt(userIdInput); // Convertir el valor a número
+
+    // Verificar que se ingresó un valor válido
+    if (!isNaN(idUsuario) && idUsuario > 0) {
+        mostrarTodosDeUsuario(idUsuario); // Llamar la función con el id del usuario
+    } else {
+        alert('Por favor, ingrese un ID de usuario válido.');
+    }
+});
+
+
+let usuarioVerificado = false; // Bandera para rastrear si el usuario ha sido verificado
 
 // Asignar el evento de clic al botón de verificar usuario
 document.getElementById('verificar-usuario-btn').addEventListener('click', handleVerificarUsuario);

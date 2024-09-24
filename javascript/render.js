@@ -1,5 +1,6 @@
 // render.js
-// Función para renderizar el usuario en el DOM
+
+// Función para renderizar un unico usuario en el DOM
 export function renderUsuario(usuario) {
     const userContainer = document.getElementById('user-container');
     userContainer.innerHTML = ''; // Limpia el contenedor antes de agregar nuevos datos
@@ -15,25 +16,47 @@ export function renderUsuario(usuario) {
     userContainer.appendChild(userElement); // Agrega el elemento al contenedor
 }
 
-// Función para renderizar los "todos" en el DOM
-export function renderizarTodos(todos) {
-    const contenedorTodos = document.getElementById('todos-container');
+// Función que renderiza los usuarios en una tabla
+export function renderizarTablaDeUsuarios(usuarios) {
+    const cuerpoTablaUsuarios = document.querySelector('#user-table tbody');
     
-    // Limpiar el contenedor antes de agregar nuevos "todos"
-    contenedorTodos.innerHTML = '';
+    // Limpiar la tabla antes de agregar los datos
+    cuerpoTablaUsuarios.innerHTML = '';
 
-    // Iterar sobre cada "todo" y agregarlo al contenedor
-    todos.forEach(todo => {
-        const elementoTodo = document.createElement('div');
-        elementoTodo.classList.add('todo'); // Añadir una clase para estilizar el "todo"
+    // Iterar sobre cada usuario y agregar una fila en la tabla
+    usuarios.forEach(usuario => {
+        const fila = document.createElement('tr');
         
-        // Crear el HTML para el "todo"
-        elementoTodo.innerHTML = `
-            <h3>${todo.title}</h3> <!-- Título del "todo" -->
-            <p>Completado: ${todo.completed ? 'Sí' : 'No'}</p> <!-- Estado de completado del "todo" -->
+        fila.innerHTML = `
+            <td>${usuario.name}</td>
+            <td>${usuario.email}</td>
+            <td>${usuario.phone}</td>
+            <td>${usuario.address.street}, ${usuario.address.city}</td>
         `;
         
-        // Agregar el elemento al contenedor
+        cuerpoTablaUsuarios.appendChild(fila);
+    });
+}
+
+
+// Función para renderizar los "ToDos" en el DOM
+export function renderizarTodos(todos) {
+    const contenedorTodos = document.getElementById('todos-container');
+    contenedorTodos.innerHTML = ''; // Limpiar el contenedor
+
+    // Si no hay todos, mostrar un mensaje
+    if (todos.length === 0) {
+        contenedorTodos.innerHTML = '<p>No hay tareas para este usuario.</p>';
+        return;
+    }
+
+    todos.forEach(todo => {
+        const elementoTodo = document.createElement('div');
+        elementoTodo.classList.add('todo'); // Añadir clase para estilo
+        elementoTodo.innerHTML = `
+            <h3>${todo.title}</h3>
+            <p>Completado: ${todo.completed ? 'Sí' : 'No'}</p>
+        `;
         contenedorTodos.appendChild(elementoTodo);
     });
 }
@@ -91,4 +114,5 @@ export function renderNuevoPost(post) {
     // Agregar el nuevo post al contenedor
     nuevoPostContainer.appendChild(postElement);
 }
+
 
